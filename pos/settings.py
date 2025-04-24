@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'rest_framework',
     'app',
+    'django_bootstrap5',
 ]
 
 MIDDLEWARE = [

@@ -10,7 +10,7 @@ from drf_spectacular.views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("api/", include("app.urls")),
+    path("", include("app.urls")),
 ]
 
 if settings.DEBUG:

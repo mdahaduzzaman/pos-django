@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Orders</title>
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+<body class="container my-5">
+    <h1 class="mb-4">Purchase Orders</h1>
+
+    <h3>Pending</h3>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Supplier</th>
+                <th>Date</th>
+                <th>Items</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for po in pending_orders %}
+            <tr>
+                <td>{{ po.supplier.name }}</td>
+                <td>{{ po.order_date }}</td>
+                <td>
+                    <ul class="list-unstyled">
+                        {% for item in po.items.all %}
+                        <li>
+                            {{ item.product.name }} —
+                            {{ item.quantity }} units @ {{ item.unit_price }} each<br>
+                            <small class="text-muted">Received: {{ item.received_quantity }}</small>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    <button class="btn btn-success btn-sm" onclick="approvePO('{{ po.id }}')">Approve</button>
+                    <a href="{% url 'purchase-order-receive' po.id %}" class="btn btn-primary btn-sm">Receive Goods</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3 class="mt-5">Completed</h3>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Supplier</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for po in completed_orders %}
+            <tr>
+                <td>{{ po.supplier.name }}</td>
+                <td>{{ po.order_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <script>
+        async function approvePO(poId) {
+            const response = await fetch(`/api/purchase-orders/${poId}/approve/`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer {{ token }}',
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                alert("Purchase Order approved!");
+                location.reload();
+            } else {
+                const data = await response.json();
+                alert("Error: " + (data.detail || "Could not approve PO"));
+            }
+        }
+    </script>
+</body>
+</html>

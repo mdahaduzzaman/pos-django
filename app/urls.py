@@ -1,12 +1,14 @@
 from django.urls import path, include
 from rest_framework.routers import SimpleRouter
 
-from app.views import PurchaseOrderViewSet
+from app.api import PurchaseOrderViewSet
+from app.views import index
 
 router = SimpleRouter()
 
 router.register("purchase-orders", PurchaseOrderViewSet, basename="purchase-order")
 
 urlpatterns = [
-    path("", include(router.urls)),
+    path("", index, name="index"),
+    path("api/", include(router.urls)),
 ]
