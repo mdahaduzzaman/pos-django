@@ -1,0 +1,67 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+VENV/
+*.env
+*.env.*  # Optional: if you use .env.dev, .env.prod, etc.
+
+# Django
+*.sqlite3
+db.sqlite3
+*.log
+
+# macOS
+.DS_Store
+
+# Linux
+*.swp
+
+# Virtualenv / pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Coverage / testing
+htmlcov/
+.tox/
+.nox/
+.coverage
+coverage.xml
+.cache
+pytest_cache/
+.pytest_cache/
+nosetests.xml
+test-results.xml
+
+# Django migrations (optional, depending on workflow)
+**/migrations/__pycache__/
+**/migrations/*.pyc
+**/migrations/*.pyo
+**/migrations/*.pyd
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+
+# Docker
+Dockerfile.*
+docker-compose.*
+.dockerignore
+
+# Git
+.git/
+.gitignore
+
+# Static/media (if built/generated locally)
+staticfiles/
+static/
+media/
